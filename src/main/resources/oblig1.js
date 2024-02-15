@@ -26,3 +26,59 @@ document.addEventListener('DOMContentLoaded', function () {
         const kundeEtternavnError = document.getElementById('kundeEtternavnError');
         const kundeNummerError = document.getElementById('kundeNummerError');
         const kundeEmailError = document.getElementById('kundeEmailError');
+
+        // Variabel for å spore valideringsstatus
+        let isValid = true;
+
+        // Validering av filmnavn
+        if (filmNavn === '') {
+            filmNavnError.textContent = 'Vennligst velg en film';
+            isValid = false;
+        } else {
+            filmNavnError.textContent = '';
+        }
+
+        // Validering av antall billetter
+        if (isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
+            antallBilletterError.textContent = 'Vennligst oppgi et gyldig antall billetter';
+            isValid = false;
+        } else {
+            antallBilletterError.textContent = '';
+        }
+
+        // Validering av fornavn
+        if (kundeNavn === '') {
+            kundeNavnError.textContent = 'Vennligst oppgi navnet ditt';
+            isValid = false;
+        } else {
+            kundeNavnError.textContent = '';
+        }
+
+        // Validering av etternavn
+        if (kundeEtternavn === '') {
+            kundeEtternavnError.textContent = 'Vennligst oppgi etternavnet ditt';
+            isValid = false;
+        } else {
+            kundeEtternavnError.textContent = '';
+        }
+
+        // Validering av telefonnummer
+        if (isNaN(kundeNummer) || kundeNummer < 0 || kundeNummer === '') {
+            kundeNummerError.textContent = 'Vennligst oppgi et gyldig telefonnummer';
+            isValid = false;
+        } else {
+            kundeNummerError.textContent = '';
+        }
+
+        // Validering av email
+        if (kundeEmail === '' || !kundeEmail.includes('@') || !kundeEmail.includes('.')) {
+            kundeEmailError.textContent = 'Vennligst oppgi e-postadressen din';
+            isValid = false;
+        } else {
+            kundeEmailError.textContent = '';
+        }
+
+        // returner de sanne valideringene
+        if (!isValid) {
+            return;
+        }
