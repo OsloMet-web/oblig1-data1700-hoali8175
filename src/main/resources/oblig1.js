@@ -82,3 +82,37 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isValid) {
             return;
         }
+
+        const billett = {
+            filmNavn: filmNavn,
+            antallBilletter: antallBilletter,
+            kundeNavn: kundeNavn,
+            kundeEtternavn: kundeEtternavn,
+            kundeNummer: kundeNummer,
+            kundeEmail: kundeEmail
+        };
+
+        // legge til, vise og restarte
+        billetter.push(billett);
+        visBilletter();
+        billettForm.reset();
+    });
+
+    // arraylengde til 0 når sletteknappen trykkes
+    sletteKnapp.addEventListener('click', function () {
+        billetter.length = 0;
+        visBilletter();
+    });
+
+    // utforming av hvordan bilettformen skal se ut
+    function visBilletter() {
+        billettListe.innerHTML = '';
+        billetter.forEach(function (billett) {
+            const ut = document.createElement('ut');
+            ut.textContent = ` Filmnavn:"${billett.filmNavn}" ${billett.antallBilletter} billett(er)  
+            Kundenavn:"${billett.kundeNavn}" Etternavn:"${billett.kundeEtternavn}" Telefonnummer:${billett.kundeNummer}
+             email:${billett.kundeEmail} --------- `;
+            billettListe.appendChild(ut);
+        });
+    }
+});
