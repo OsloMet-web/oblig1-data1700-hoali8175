@@ -1,4 +1,4 @@
-package com.example.oblig1data1700hoali8175;
+package com.example.oblig1data1700hoali8175.oblig2;
 
 public class Bilett {
     private String filmNavn;

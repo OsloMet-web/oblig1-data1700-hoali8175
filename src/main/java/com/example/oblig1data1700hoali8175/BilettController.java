@@ -1,5 +1,6 @@
 package com.example.oblig1data1700hoali8175;
 
+import com.example.oblig1data1700hoali8175.oblig2.Bilett;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
