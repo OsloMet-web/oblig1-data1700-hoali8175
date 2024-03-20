@@ -63,20 +63,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Validering av telefonnummer
-        if (isNaN(kundeNummer) || kundeNummer < 0 || kundeNummer === '') {
-            kundeNummerError.textContent = 'Vennligst oppgi et gyldig telefonnummer';
+        const telefonRegex = /^\d{8}$/;
+        if (!telefonRegex.test(kundeNummer)) {
+            kundeNummerError.textContent = 'Vennligst oppgi et gyldig telefonnummer med 8 sifre';
             isValid = false;
         } else {
             kundeNummerError.textContent = '';
         }
 
+
         // Validering av email
-        if (kundeEmail === '' || !kundeEmail.includes('@') || !kundeEmail.includes('.')) {
-            kundeEmailError.textContent = 'Vennligst oppgi e-postadressen din';
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(kundeEmail)) {
+            kundeEmailError.textContent = 'Vennligst oppgi en gyldig e-postadresse på formen xxxxx@xxxx.xxx';
             isValid = false;
         } else {
             kundeEmailError.textContent = '';
         }
+
 
         // returner de sanne valideringene
         if (!isValid) {
