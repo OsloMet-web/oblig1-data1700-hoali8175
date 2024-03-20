@@ -99,7 +99,7 @@
       const kundeEmail = $('#kundeEmail').val().trim();
 
       // Gjør AJAX POST-forespørsel for å sende data til Spring Controller
-      $.post('/lagreBillett', {
+      $.post('billetter/lagreBillett', {
         filmNavn: filmNavn,
         antallBilletter: antallBilletter,
         kundeNavn: kundeNavn,
