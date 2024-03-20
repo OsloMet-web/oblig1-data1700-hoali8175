@@ -1,8 +1,5 @@
 package com.example.oblig1data1700hoali8175.oblig2;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,24 +8,24 @@ import java.util.List;
 @RequestMapping("/api/billetter")
 public class BillettController {
 
-    @Autowired
-    private BillettService billettService;
+    private final List<Billett> billetter;
+
+    public BillettController(List<Billett> billetter) {
+        this.billetter = billetter;
+    }
 
     @PostMapping("/registrer")
-    public ResponseEntity<?> registrerBillett(@RequestBody Billett billett) {
-        billettService.registrerBillett(billett);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public void registrerBillett(@RequestBody Billett billett) {
+        billetter.add(billett);
     }
 
     @GetMapping("/hentAlle")
-    public ResponseEntity<List<Billett>> hentAlleBilletter() {
-        List<Billett> billetter = billettService.hentAlleBilletter();
-        return new ResponseEntity<>(billetter, HttpStatus.OK);
+    public List<Billett> hentAlleBilletter() {
+        return billetter;
     }
 
     @DeleteMapping("/slettAlle")
-    public ResponseEntity<?> slettAlleBilletter() {
-        billettService.slettAlleBilletter();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public void slettAlleBilletter() {
+        billetter.clear();
     }
 }
