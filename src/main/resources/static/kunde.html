@@ -94,6 +94,7 @@
       if (!isValid) {
         return;
       }
+
       const billettData = {
         filmNavn: $('#filmNavn').val(),
         antallBilletter: $('#antallBilletter').val(),
@@ -103,10 +104,18 @@
         kundeEmail: $('#kundeEmail').val()
       };
 
-      $.post('/api/billetter/registrer', billettData, function() {
-        hentAlleBilletter();
-        $('#billettForm')[0].reset();
-      });
+      // Send billettdatatene til serveren
+      $.post('/api/billetter/registrer', billettData)
+              .done(function() {
+                // Hvis registreringen var vellykket, oppdater billettlisten og tilbakestill skjemaet
+                hentAlleBilletter();
+                $('#billettForm')[0].reset();
+              })
+              .fail(function(jqXHR, textStatus, errorThrown) {
+                // Hvis det oppstår en feil under registreringen, logg feilmeldingen
+                console.error('Feil ved registrering av billett:', textStatus, errorThrown);
+                alert('Det oppstod en feil ved registrering av billetten. Vennligst prøv igjen.');
+              });
     });
 
     // Lytt etter klikk på slett-knappen
@@ -116,19 +125,28 @@
         type: 'DELETE',
         success: function() {
           $('#billettListe').empty();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Feil ved sletting av billetter:', textStatus, errorThrown);
+          alert('Det oppstod en feil ved sletting av billettene. Vennligst prøv igjen.');
         }
       });
     });
 
     // Funksjon for å hente alle billetter
     function hentAlleBilletter() {
-      $.get('/api/billetter/hentAlle', function(data) {
-        $('#billettListe').empty();
-        data.forEach(function(billett) {
-          const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, E-post: ${billett.kundeEmail}</li>`;
-          $('#billettListe').append(ut);
-        });
-      });
+      $.get('/api/billetter/hentAlle')
+              .done(function(data) {
+                $('#billettListe').empty();
+                data.forEach(function(billett) {
+                  const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, E-post: ${billett.kundeEmail}</li>`;
+                  $('#billettListe').append(ut);
+                });
+              })
+              .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error('Feil ved henting av billetter:', textStatus, errorThrown);
+                alert('Det oppstod en feil ved henting av billettene. Vennligst prøv igjen.');
+              });
     }
 
     // Funksjon for å validere inputfelter
@@ -196,5 +214,6 @@
   });
 
 </script>
+
 </body>
 </html>
