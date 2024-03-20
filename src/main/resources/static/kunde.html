@@ -1,44 +1,83 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kunder</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <title>OBLIG 1</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Kunde</h1>
+
+<h1>Bestilling av kinobiletter</h1>
+
+<!-- Skjema for kinobillettbestilling -->
 <form id="billettForm">
-  <label for="filmNavn">Filmnavn:</label>
-  <input type="text" id="filmNavn" required><br>
-  <span id="filmNavnError" class="error-message"></span><br>
-
-  <label for="antallBilletter">Antall billetter:</label>
-  <input type="number" id="antallBilletter" min="1" max="9" required><br>
-  <span id="antallBilletterError" class="error-message"></span><br>
-
-  <label for="kundeNavn">Fornavn:</label>
-  <input type="text" id="kundeNavn" required><br>
-  <span id="kundeNavnError" class="error-message"></span><br>
-
-  <label for="kundeEtternavn">Etternavn:</label>
-  <input type="text" id="kundeEtternavn" required><br>
-  <span id="kundeEtternavnError" class="error-message"></span><br>
-
-  <label for="kundeNummer">Telefonnummer:</label>
-  <input type="text" id="kundeNummer" pattern="[0-9]{8}" required><br>
-  <span id="kundeNummerError" class="error-message"></span><br>
-
-  <label for="kundeEmail">E-postadresse:</label>
-  <input type="email" id="kundeEmail" required><br>
-  <span id="kundeEmailError" class="error-message"></span><br>
-
-  <button type="submit">Registrer</button>
+  <table>
+    <!-- Filmnavn -->
+    <tr>
+      <td><label for="filmNavn">Filmnavn:</label></td>
+      <td>
+        <select class="form-control" id="filmNavn">
+          <option value="" selected disabled>Velg film her</option>
+          <option>Indiana Jones and the Dial of Destiny</option>
+          <option>Avengers Infinity War</option>
+          <option>Spiderman Far From Home</option>
+        </select>
+        <span id="filmNavnError" class="error-message"></span>
+      </td>
+    </tr>
+    <!-- Antall billetter -->
+    <tr>
+      <td><label for="antallBilletter">Antall billetter:</label></td>
+      <td>
+        <input type="number" id="antallBilletter" min="1" max="9">
+        <span id="antallBilletterError" class="error-message"></span>
+      </td>
+    </tr>
+    <!-- Fornavn -->
+    <tr>
+      <td><label for="kundeNavn">Fornavn:</label></td>
+      <td>
+        <input class="form-control" type="text" id="kundeNavn">
+        <span id="kundeNavnError" class="error-message"></span>
+      </td>
+    </tr>
+    <!-- Etternavn -->
+    <tr>
+      <td><label for="kundeEtternavn">Etternavn:</label></td>
+      <td>
+        <input class="form-control" type="text" id="kundeEtternavn">
+        <span id="kundeEtternavnError" class="error-message"></span>
+      </td>
+    </tr>
+    <!-- Telefonnummer -->
+    <tr>
+      <td><label for="kundeNummer">Telefonnummer:</label></td>
+      <td>
+        <input class="form-control" type="text" id="kundeNummer">
+        <span id="kundeNummerError" class="error-message"></span>
+      </td>
+    </tr>
+    <!-- E-postadresse -->
+    <tr>
+      <td><label for="kundeEmail">E-postadresse:</label></td>
+      <td>
+        <input class="form-control" type="text" id="kundeEmail">
+        <span id="kundeEmailError" class="error-message"></span>
+      </td>
+    </tr>
+  </table>
+  <!-- Knapp for å sende inn skjemaet -->
+  <button class="btn btn-primary" type="submit">Kjøp billett</button>
 </form>
 
+<!-- Overskrift for alle billetter -->
 <h2>Alle billetter:</h2>
+<!-- Liste for å vise alle billetter -->
 <ul id="billettListe"></ul>
 
-<button id="slettBilletter">Slett alle billettene</button>
+<!-- Knapp for å slette alle billetter -->
+<button class="btn btn-danger" id="slettBilletter">Slett alle billettene</button>
+
 
 <script>
   $(document).ready(function() {
