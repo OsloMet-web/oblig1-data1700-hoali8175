@@ -117,7 +117,7 @@
     });
 
     // Gjør AJAX GET-forespørsel for å hente data fra Spring Controller
-    $.get('/hentBilletter', function(billetter) {
+    $.get('billetter/hentBilletter', function(billetter) {
       // Viser billetter som er hentet fra serveren
       console.log(billetter);
       // Du kan legge til logikk for å vise billetter på grensesnittet her hvis nødvendig
