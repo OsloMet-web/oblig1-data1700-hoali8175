@@ -111,11 +111,6 @@
                 hentAlleBilletter();
                 $('#billettForm')[0].reset();
               })
-              .fail(function(jqXHR, textStatus, errorThrown) {
-                // Hvis det oppstår en feil under registreringen, logg feilmeldingen
-                console.error('Feil ved registrering av billett:', textStatus, errorThrown);
-                alert('Det oppstod en feil ved registrering av billetten. Vennligst prøv igjen.');
-              });
     });
 
     // Lytt etter klikk på slett-knappen
