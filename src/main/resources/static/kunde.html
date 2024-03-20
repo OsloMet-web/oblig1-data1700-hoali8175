@@ -79,67 +79,122 @@
 <!-- Knapp for å slette alle billetter -->
 <button class="btn btn-danger" id="slettBilletter">Slett alle billettene</button>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   $(document).ready(function() {
-    const billettForm = $('#billettForm');
-    const billettListe = $('#billettListe');
-    const sletteKnapp = $('#slettBilletter');
+    // Hent alle billetter når siden lastes
+    hentAlleBilletter();
 
-    // Lytter etter innlevering av skjemaet for kinobillettbestilling
-    billettForm.submit(function(event) {
+    // Lytt etter innlevering av skjemaet for kinobillettbestilling
+    $('#billettForm').submit(function(event) {
       event.preventDefault();
 
-      // Henter verdier fra input feltene
-      const filmNavn = $('#filmNavn').val().trim();
-      const antallBilletter = $('#antallBilletter').val().trim();
-      const kundeNavn = $('#kundeNavn').val().trim();
-      const kundeEtternavn = $('#kundeEtternavn').val().trim();
-      const kundeNummer = $('#kundeNummer').val().trim();
-      const kundeEmail = $('#kundeEmail').val().trim();
+      // Validering av inputfelter
+      const isValid = validerInput();
 
-      // Gjør AJAX POST-forespørsel for å sende data til Spring Controller
-      $.post('billetter/lagreBillett', {
-        filmNavn: filmNavn,
-        antallBilletter: antallBilletter,
-        kundeNavn: kundeNavn,
-        kundeEtternavn: kundeEtternavn,
-        kundeNummer: kundeNummer,
-        kundeEmail: kundeEmail
-      }).done(function(response) {
-        // Viser svaret fra serveren
-        console.log(response);
-        // Du kan legge til annen oppdatering av grensesnittet her hvis nødvendig
-      }).fail(function(error) {
-        // Håndter feil
-        console.error(error);
+      if (!isValid) {
+        return;
+      }
+      const billettData = {
+        filmNavn: $('#filmNavn').val(),
+        antallBilletter: $('#antallBilletter').val(),
+        kundeNavn: $('#kundeNavn').val(),
+        kundeEtternavn: $('#kundeEtternavn').val(),
+        kundeNummer: $('#kundeNummer').val(),
+        kundeEmail: $('#kundeEmail').val()
+      };
+
+      $.post('/api/billetter/registrer', billettData, function() {
+        hentAlleBilletter();
+        $('#billettForm')[0].reset();
       });
     });
 
-    // Gjør AJAX GET-forespørsel for å hente data fra Spring Controller
-    $.get('billetter/hentBilletter', function(billetter) {
-      // Viser billetter som er hentet fra serveren
-      console.log(billetter);
-      // Du kan legge til logikk for å vise billetter på grensesnittet her hvis nødvendig
-    });
-
-    // Gjør AJAX DELETE-forespørsel når sletteknappen trykkes
-    sletteKnapp.click(function() {
+    // Lytt etter klikk på slett-knappen
+    $('#slettBilletter').click(function() {
       $.ajax({
-        url: '/slettBilletter',
+        url: '/api/billetter/slettAlle',
         type: 'DELETE',
-        success: function(response) {
-          // Håndter suksessrespons fra serveren
-          console.log(response);
-          // Du kan legge til annen oppdatering av grensesnittet her hvis nødvendig
-        },
-        error: function(error) {
-          // Håndter feil
-          console.error(error);
+        success: function() {
+          $('#billettListe').empty();
         }
       });
     });
+
+    // Funksjon for å hente alle billetter
+    function hentAlleBilletter() {
+      $.get('/api/billetter/hentAlle', function(data) {
+        $('#billettListe').empty();
+        data.forEach(function(billett) {
+          const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, E-post: ${billett.kundeEmail}</li>`;
+          $('#billettListe').append(ut);
+        });
+      });
+    }
+
+    // Funksjon for å validere inputfelter
+    function validerInput() {
+      let isValid = true;
+
+      // Validering av filmnavn
+      const filmNavn = $('#filmNavn').val().trim();
+      if (filmNavn === '') {
+        $('#filmNavnError').text('Vennligst velg en film');
+        isValid = false;
+      }
+      else {
+        $('#filmNavnError').text('');
+      }
+      // Validering av antall billetter
+      const antallBilletter = $('#antallBilletter').val();
+      if (isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
+        $('#antallBilletterError').text('Vennligst oppgi et gyldig antall billetter (mellom 1 og 9)');
+        isValid = false;
+      } else {
+        $('#antallBilletterError').text('');
+      }
+
+      // Validering av fornavn
+      const kundeNavn = $('#kundeNavn').val().trim();
+      if (kundeNavn === '') {
+        $('#kundeNavnError').text('Vennligst oppgi navnet ditt');
+        isValid = false;
+      } else {
+        $('#kundeNavnError').text('');
+      }
+
+      // Validering av etternavn
+      const kundeEtternavn = $('#kundeEtternavn').val().trim();
+      if (kundeEtternavn === '') {
+        $('#kundeEtternavnError').text('Vennligst oppgi etternavnet ditt');
+        isValid = false;
+      } else {
+        $('#kundeEtternavnError').text('');
+      }
+
+      // Validering av telefonnummer
+      const telefonnummer = $('#kundeNummer').val().trim();
+      const telefonRegex = /^\d{8}$/;
+      if (!telefonRegex.test(telefonnummer)) {
+        $('#kundeNummerError').text('Vennligst oppgi et gyldig telefonnummer med 8 sifre');
+        isValid = false;
+      } else {
+        $('#kundeNummerError').text('');
+      }
+
+      // Validering av e-postadresse
+      const kundeEmail = $('#kundeEmail').val().trim();
+      const emailRegex = /^\S+@\S+\.\S+$/;
+      if (!emailRegex.test(kundeEmail)) {
+        $('#kundeEmailError').text('Vennligst oppgi en gyldig e-postadresse');
+        isValid = false;
+      } else {
+        $('#kundeEmailError').text('');
+      }
+
+      return isValid;
+    }
   });
+
 </script>
 </body>
 </html>

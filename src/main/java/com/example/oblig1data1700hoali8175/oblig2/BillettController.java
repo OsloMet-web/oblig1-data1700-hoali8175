@@ -6,26 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/billetter")
+@RequestMapping("/api/billetter") // Legger til "/api" først
 public class BillettController {
 
     private final List<Billett> billetter = new ArrayList<>();
 
-    @PostMapping("/lagreBillett")
+    @PostMapping("/registrer") // Endrer til /registrer
     public String lagreBillett(@RequestBody Billett billett) {
         billetter.add(billett);
         return "Billett lagret!";
     }
 
-    @GetMapping("/hentBilletter")
+    @GetMapping("/hentAlle") // Endrer til /hentAlle
     public List<Billett> hentBilletter() {
         return billetter;
     }
 
-    @DeleteMapping("/slettBilletter")
+    @DeleteMapping("/slettAlle") // Endrer til /slettAlle
     public String slettBilletter() {
         billetter.clear();
         return "Alle billetter slettet!";
     }
 }
-
