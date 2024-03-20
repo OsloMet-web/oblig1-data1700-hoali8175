@@ -1,22 +1,21 @@
-package com.example.oblig1data1700hoali8175.oblig2;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/billetter")
 public class BillettController {
 
     private final ArrayList<Billett> billetter = new ArrayList<>();
 
-    @PostMapping("/registrerBillett")
-    public void registrerBillett(@RequestBody Billett innBillett) {
-        billetter.add(innBillett);
+    @PostMapping("/registrer")
+    public void registrerBillett(@RequestBody Billett billett) {
+        billetter.add(billett);
     }
 
-    @GetMapping("/hentAlleBilletter")
+    @GetMapping("/hentAlle")
     public ArrayList<Billett> hentAlleBilletter() {
         return billetter;
     }
 }
-
