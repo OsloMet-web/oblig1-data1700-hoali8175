@@ -1,3 +1,4 @@
+package com.example.oblig1data1700hoali8175.oblig2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
