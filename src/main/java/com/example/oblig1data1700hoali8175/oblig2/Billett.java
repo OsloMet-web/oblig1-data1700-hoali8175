@@ -1,6 +1,6 @@
 package com.example.oblig1data1700hoali8175.oblig2;
 
-public class Bilett {
+public class Billett {
     private String filmNavn;
     private int antallBiletter;
     private String kundeNavn;

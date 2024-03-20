@@ -7,15 +7,15 @@ import java.util.ArrayList;
 @RestController
 public class BillettController {
 
-    private final ArrayList<Bilett> billetter = new ArrayList<>();
+    private final ArrayList<Billett> billetter = new ArrayList<>();
 
     @PostMapping("/registrerBillett")
-    public void registrerBillett(@RequestBody Bilett innBilett) {
-        billetter.add(innBilett);
+    public void registrerBillett(@RequestBody Billett innBillett) {
+        billetter.add(innBillett);
     }
 
     @GetMapping("/hentAlleBilletter")
-    public ArrayList<Bilett> hentAlleBilletter() {
+    public ArrayList<Billett> hentAlleBilletter() {
         return billetter;
     }
 }
