@@ -1,33 +1,31 @@
 package com.example.oblig1data1700hoali8175.oblig2;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/billetter")
+@RequestMapping("/billetter")
 public class BillettController {
 
-    // Simulert lagring av billetter i minnet
-    private List<Billett> billetter = new ArrayList<>();
+    private final List<Billett> billetter = new ArrayList<>();
 
-    // Metode for å registrere en billett
-    @PostMapping("/registrer")
-    public void registrerBillett(@RequestBody Billett billett) {
+    @PostMapping("/lagreBillett")
+    public String lagreBillett(@RequestBody Billett billett) {
         billetter.add(billett);
+        return "Billett lagret!";
     }
 
-    // Metode for å hente alle billetter
-    @GetMapping("/hentAlle")
-    public List<Billett> hentAlleBilletter() {
+    @GetMapping("/hentBilletter")
+    public List<Billett> hentBilletter() {
         return billetter;
     }
 
-    // Metode for å slette alle billetter
-    @DeleteMapping("/slettAlle")
-    public void slettAlleBilletter() {
+    @DeleteMapping("/slettBilletter")
+    public String slettBilletter() {
         billetter.clear();
+        return "Alle billetter slettet!";
     }
 }
+
