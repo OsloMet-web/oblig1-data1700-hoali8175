@@ -8,21 +8,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/billetter") // Endre URL-mapping til dette nivået
+@RequestMapping("/api/billetter")
 public class BillettController {
 
     @Autowired
     private BillettService billettService;
 
-    @PostMapping("/registrer") // Endre URL-mapping til dette nivået
+    @PostMapping("/registrer")
     public ResponseEntity<?> registrerBillett(@RequestBody Billett billett) {
         billettService.registrerBillett(billett);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/hentAlle") // Endre URL-mapping til dette nivået
+    @GetMapping("/hentAlle")
     public ResponseEntity<List<Billett>> hentAlleBilletter() {
         List<Billett> billetter = billettService.hentAlleBilletter();
         return new ResponseEntity<>(billetter, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/slettAlle")
+    public ResponseEntity<?> slettAlleBilletter() {
+        billettService.slettAlleBilletter();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
