@@ -43,7 +43,9 @@ $(document).ready(function() {
         $.get('/hentAlle', function(data) { // Endret URL til '/hentAlle' basert på kontrolleren
             $('#billettListe').empty();
             data.forEach(function(billett) {
-                const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, E-post: ${billett.kundeEmail}</li>`;
+                const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, 
+                Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, 
+                E-post: ${billett.kundeEmail}</li>`;
                 $('#billettListe').append(ut);
             });
         });
