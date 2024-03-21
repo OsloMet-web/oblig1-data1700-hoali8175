@@ -1,30 +1,26 @@
 package com.example.oblig1data1700hoali8175.oblig2;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import webprog4.Kunde2;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/billetter") // Legger til "/api" først
 public class BillettController {
+    private final ArrayList<Kunde2> alleKunder = new ArrayList<>();
 
-    private final List<Billett> billetter = new ArrayList<>();
-
-    @PostMapping("/registrer") // Endrer til /registrer
-    public String lagreBillett(@RequestBody Billett billett) {
-        billetter.add(billett);
-        return "Billett lagret!";
+    @PostMapping("/lagre")
+    public void lagreKunde(Kunde2 innKunde2){
+        alleKunder.add(innKunde2);
     }
-
-    @GetMapping("api/billetter/hentAlle") // Endrer til /hentAlle
-    public List<Billett> hentBilletter() {
-        return billetter;
+    @GetMapping("/hentAlle")
+    public ArrayList<Kunde2> hentAlle(){
+        return alleKunder;
     }
-
-    @DeleteMapping("/slettAlle") // Endrer til /slettAlle
-    public String slettBilletter() {
-        billetter.clear();
-        return "Alle billetter slettet!";
+    @GetMapping("/slettAlle")
+    public void slettAlle(){
+        alleKunder.clear();
     }
 }
