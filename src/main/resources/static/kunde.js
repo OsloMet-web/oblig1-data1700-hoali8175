@@ -2,27 +2,29 @@ $(document).ready(function() {
     // Hent alle billetter når siden lastes
     hentAlleBilletter();
 
-    // Lytt etter klikk på registrer-knappen
-    $('#registrer').click(function() {
-        // Valider inputfelter og vis valideringstekster ved behov
-        validerInput();
+    // Lytt etter innlevering av skjemaet for kinobillettbestilling
+    $('#billettForm').submit(function(event) {
+        event.preventDefault();
 
-        // Hvis valideringen er vellykket, send data til serveren
-        if (validerInput()) {
-            const billettData = {
-                filmNavn: $('#filmNavn').val(),
-                antallBilletter: $('#antallBilletter').val(),
-                kundeNavn: $('#kundeNavn').val(),
-                kundeEtternavn: $('#kundeEtternavn').val(),
-                kundeNummer: $('#kundeNummer').val(),
-                kundeEmail: $('#kundeEmail').val()
-            };
+        // Validering av inputfelter
+        const isValid = validerInput();
 
-            $.post('/lagre', billettData, function() {
-                hentAlleBilletter();
-                $('#billettForm')[0].reset();
-            });
+        if (!isValid) {
+            return;
         }
+        const billettData = {
+            filmNavn: $('#filmNavn').val(),
+            antallBilletter: $('#antallBilletter').val(),
+            kundeNavn: $('#kundeNavn').val(),
+            kundeEtternavn: $('#kundeEtternavn').val(),
+            kundeNummer: $('#kundeNummer').val(),
+            kundeEmail: $('#kundeEmail').val()
+        };
+
+        $.post('/lagre', billettData, function() { // Endret URL til '/lagre' basert på kontrolleren
+            hentAlleBilletter();
+            $('#billettForm')[0].reset();
+        });
     });
 
     // Lytt etter klikk på slett-knappen
