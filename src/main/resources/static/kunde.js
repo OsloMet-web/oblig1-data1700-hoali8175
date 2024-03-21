@@ -21,7 +21,7 @@ $(document).ready(function() {
             kundeEmail: $('#kundeEmail').val()
         };
 
-        $.post('/api/billetter/registrer', billettData, function() {
+        $.post('/lagre', billettData, function() { // Endret URL til '/lagre' basert på kontrolleren
             hentAlleBilletter();
             $('#billettForm')[0].reset();
         });
@@ -30,8 +30,8 @@ $(document).ready(function() {
     // Lytt etter klikk på slett-knappen
     $('#slettBilletter').click(function() {
         $.ajax({
-            url: '/api/billetter/slettAlle',
-            type: 'DELETE',
+            url: '/slettAlle', // Endret URL til '/slettAlle' basert på kontrolleren
+            type: 'GET', // Endret metoden til GET siden kontrolleren forventer en GET-forespørsel
             success: function() {
                 $('#billettListe').empty();
             }
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
     // Funksjon for å hente alle billetter
     function hentAlleBilletter() {
-        $.get('/api/billetter/hentAlle', function(data) {
+        $.get('/hentAlle', function(data) { // Endret URL til '/hentAlle' basert på kontrolleren
             $('#billettListe').empty();
             data.forEach(function(billett) {
                 const ut = `<li>Filmnavn: ${billett.filmNavn}, Antall: ${billett.antallBilletter}, Kunde: ${billett.kundeNavn} ${billett.kundeEtternavn}, Telefon: ${billett.kundeNummer}, E-post: ${billett.kundeEmail}</li>`;
