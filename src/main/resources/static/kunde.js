@@ -54,8 +54,8 @@ $(document).ready(function() {
         let isValid = true;
 
         // Validering av filmnavn
-        const filmNavn = $('#filmNavn').val().trim();
-        if (filmNavn === '') {
+        const filmNavn = $('#filmNavn').val();
+        if (!filmNavn || filmNavn.trim() === '') {
             $('#filmNavnError').text('Vennligst velg en film');
             isValid = false;
         }
@@ -65,10 +65,7 @@ $(document).ready(function() {
 
         // Validering av antall billetter
         const antallBilletter = $('#antallBilletter').val();
-        if (antallBilletter === '') {
-            $('#antallBilletterError').text('Vennligst oppgi antall billetter');
-            isValid = false;
-        } else if (isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
+        if (!antallBilletter || antallBilletter.trim() === '' || isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
             $('#antallBilletterError').text('Vennligst oppgi et gyldig antall billetter (mellom 1 og 9)');
             isValid = false;
         } else {
@@ -77,7 +74,7 @@ $(document).ready(function() {
 
         // Validering av fornavn
         const kundeNavn = $('#kundeNavn').val().trim();
-        if (kundeNavn === '') {
+        if (!kundeNavn) {
             $('#kundeNavnError').text('Vennligst oppgi navnet ditt');
             isValid = false;
         } else {
@@ -86,7 +83,7 @@ $(document).ready(function() {
 
         // Validering av etternavn
         const kundeEtternavn = $('#kundeEtternavn').val().trim();
-        if (kundeEtternavn === '') {
+        if (!kundeEtternavn) {
             $('#kundeEtternavnError').text('Vennligst oppgi etternavnet ditt');
             isValid = false;
         } else {
@@ -96,10 +93,7 @@ $(document).ready(function() {
         // Validering av telefonnummer
         const telefonnummer = $('#kundeNummer').val().trim();
         const telefonRegex = /^\d{8}$/;
-        if (telefonnummer === '') {
-            $('#kundeNummerError').text('Vennligst oppgi telefonnummer');
-            isValid = false;
-        } else if (!telefonRegex.test(telefonnummer)) {
+        if (!telefonnummer || !telefonRegex.test(telefonnummer)) {
             $('#kundeNummerError').text('Vennligst oppgi et gyldig telefonnummer med 8 sifre');
             isValid = false;
         } else {
@@ -109,10 +103,7 @@ $(document).ready(function() {
         // Validering av e-postadresse
         const kundeEmail = $('#kundeEmail').val().trim();
         const emailRegex = /^\S+@\S+\.\S+$/;
-        if (kundeEmail === '') {
-            $('#kundeEmailError').text('Vennligst oppgi e-postadresse');
-            isValid = false;
-        } else if (!emailRegex.test(kundeEmail)) {
+        if (!kundeEmail || !emailRegex.test(kundeEmail)) {
             $('#kundeEmailError').text('Vennligst oppgi en gyldig e-postadresse');
             isValid = false;
         } else {
@@ -121,4 +112,5 @@ $(document).ready(function() {
 
         return isValid;
     }
+
 });
