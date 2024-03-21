@@ -9,18 +9,18 @@ import java.util.ArrayList;
 
 @RestController
 public class BillettController {
-    private final ArrayList<Kunde2> alleKunder = new ArrayList<>();
+    private final ArrayList<Billett> alleBilletter = new ArrayList<>();
 
     @PostMapping("/lagre")
-    public void lagreKunde(Kunde2 innKunde2){
-        alleKunder.add(innKunde2);
+    public void lagreKunde(Billett billett){
+        alleBilletter.add(billett);
     }
     @GetMapping("/hentAlle")
-    public ArrayList<Kunde2> hentAlle(){
-        return alleKunder;
+    public ArrayList<Billett> hentAlle(){
+        return alleBilletter;
     }
     @GetMapping("/slettAlle")
     public void slettAlle(){
-        alleKunder.clear();
+        alleBilletter.clear();
     }
 }
