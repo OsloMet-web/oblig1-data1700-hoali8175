@@ -144,9 +144,13 @@
       else {
         $('#filmNavnError').text('');
       }
+
       // Validering av antall billetter
       const antallBilletter = $('#antallBilletter').val();
-      if (isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
+      if (antallBilletter === '') {
+        $('#antallBilletterError').text('Vennligst oppgi antall billetter');
+        isValid = false;
+      } else if (isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 9) {
         $('#antallBilletterError').text('Vennligst oppgi et gyldig antall billetter (mellom 1 og 9)');
         isValid = false;
       } else {
@@ -174,7 +178,10 @@
       // Validering av telefonnummer
       const telefonnummer = $('#kundeNummer').val().trim();
       const telefonRegex = /^\d{8}$/;
-      if (!telefonRegex.test(telefonnummer)) {
+      if (telefonnummer === '') {
+        $('#kundeNummerError').text('Vennligst oppgi telefonnummer');
+        isValid = false;
+      } else if (!telefonRegex.test(telefonnummer)) {
         $('#kundeNummerError').text('Vennligst oppgi et gyldig telefonnummer med 8 sifre');
         isValid = false;
       } else {
@@ -184,7 +191,10 @@
       // Validering av e-postadresse
       const kundeEmail = $('#kundeEmail').val().trim();
       const emailRegex = /^\S+@\S+\.\S+$/;
-      if (!emailRegex.test(kundeEmail)) {
+      if (kundeEmail === '') {
+        $('#kundeEmailError').text('Vennligst oppgi e-postadresse');
+        isValid = false;
+      } else if (!emailRegex.test(kundeEmail)) {
         $('#kundeEmailError').text('Vennligst oppgi en gyldig e-postadresse');
         isValid = false;
       } else {
