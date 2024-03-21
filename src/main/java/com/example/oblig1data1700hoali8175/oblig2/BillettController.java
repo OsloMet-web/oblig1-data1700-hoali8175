@@ -17,7 +17,7 @@ public class BillettController {
         return "Billett lagret!";
     }
 
-    @GetMapping("/hentAlle") // Endrer til /hentAlle
+    @GetMapping("api/billetter/hentAlle") // Endrer til /hentAlle
     public List<Billett> hentBilletter() {
         return billetter;
     }
